@@ -66,6 +66,7 @@ public class sampleJwtGenerator {
         String secretKey = prop.getProperty("secretKey");
         String accountId = prop.getProperty("accountId");
         String publicurl = prop.getProperty("publicurl");
+        String param = prop.getProperty("param");
 
         // zephyr accessKey , we can get from Addons >> zapi section
 
@@ -78,7 +79,7 @@ public class sampleJwtGenerator {
         JwtGenerator jwtGenerator = client.getJwtGenerator();
 
         // API to which the JWT token has to be generated
-        List<String> createCycleUriList = getUrls(args, zephyrBaseUrl,publicurl);
+        List<String> createCycleUriList = getUrls(args, zephyrBaseUrl,publicurl,param);
 
         for (String createCycleUri : createCycleUriList) {
             URI uri = new URI(createCycleUri);
@@ -91,15 +92,15 @@ public class sampleJwtGenerator {
         }
     }
 
-    private static List<String> getUrls(String[] args, String zephyrBaseUrl, String publicurl) {
+    private static List<String> getUrls(String[] args, String zephyrBaseUrl, String publicurl,String param) {
         List<String> list = new ArrayList<>();
 
 
         if(args == null || args.length < 2) {
-            list.add(zephyrBaseUrl + publicurl + getValue(args, 0) + "&projectId=" + getValue(args, 1));
+            list.add(zephyrBaseUrl + publicurl + getValue(args, 0) + param + getValue(args, 1));
         } else {
             for(int i = 0; i < args.length; i = i + 2) {
-                list.add(zephyrBaseUrl + publicurl + getValue(args, i) + "&projectId=" + getValue(args, i+1));
+                list.add(zephyrBaseUrl + publicurl + getValue(args, i) + param + getValue(args, i+1));
             }
         }
 
